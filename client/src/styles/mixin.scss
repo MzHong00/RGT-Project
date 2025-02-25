@@ -1,0 +1,50 @@
+@mixin flex-layout($direction, $align: normal, $justify: flex-start, $gap: 1rem) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+    gap: $gap;
+}
+
+@mixin text-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@mixin main-button {
+    color: rgb(var(--foreground));
+    background-color: rgb(var(--color-main));
+    border-radius: var(--border-radius);
+    border: none;
+}
+
+@mixin main-button-dark {
+    color: rgb(var(--foreground));
+    background-color: rgb(var(--color-dark)) !important;
+    border-radius: var(--border-radius);
+    border: none !important;
+}
+
+@mixin pos-center($position: absolute) {
+    position: $position;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin skeleton-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
