@@ -7,7 +7,6 @@ import config from "../config";
 export default (app: Express) => {
   const corsOptions = {
     origin: config.allowClientUrl,
-    credentials: true,
   };
 
   app.use(cors(corsOptions));
