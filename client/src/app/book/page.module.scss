@@ -1,0 +1,17 @@
+@use '/src/styles/mixin.scss' as m;
+
+.page {
+    max-width: 800px;
+    margin: auto;
+    @include m.flex-layout(column, center);
+
+    &>*{
+        width: 100%;
+    }
+}
+
+.createBookButton {
+    background: rgb(var(--color-main));
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
