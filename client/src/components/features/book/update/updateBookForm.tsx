@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 import type { IBook } from "@/types/IBook";
@@ -16,7 +15,6 @@ export const UpdateBookForm = ({ book }: { book: IBook }) => {
   } = useForm<IBook>({
     defaultValues: book,
   });
-  const router = useRouter();
   const { mutate } = useUpdateBookMutation();
   const onSubmit: SubmitHandler<IBook> = (newBook) => {
     mutate({ slug: book._id, book: newBook });
