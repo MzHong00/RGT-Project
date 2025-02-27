@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ import { DeleteBookButton } from "@/components/features/book/delete/deleteBookBu
 import styles from "./bookDetail.module.scss";
 
 export const BookDetail = ({ id }: { id: string }) => {
-  const {data: book} = useSuspenseQuery(BookQueries.readBook(id));
+  const { data: book } = useSuspenseQuery(BookQueries.readBook(id));
 
   const { _id, title, author, price, stock, soldCount } = book;
 
@@ -23,11 +23,13 @@ export const BookDetail = ({ id }: { id: string }) => {
         </header>
         <footer>
           <div>￦ {price}원</div>
-          <div>재고: {stock}</div>
+          <div>재고: {stock - soldCount}</div>
         </footer>
       </section>
       <section className={styles.actionBar}>
-        <Link href={`/book/${_id}/update`} className={styles.updateButton}>수정</Link>
+        <Link href={`/book/${_id}/update`} className={styles.updateButton}>
+          수정
+        </Link>
         <DeleteBookButton id={_id} className={styles.deleteButton} />
       </section>
     </article>

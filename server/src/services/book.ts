@@ -46,10 +46,7 @@ export class BookService {
   // 책 정보를 업데이트하는 메서드
   static async updateBook(bookId: IBook["_id"], updatedData: IBook) {
     try {
-      const updatedBook = await Book.findByIdAndUpdate(bookId, {
-        ...updatedData,
-        stock: updatedData.stock - updatedData.soldCount
-      }, {
+      const updatedBook = await Book.findByIdAndUpdate(bookId, updatedData, {
         new: true,
       }); // 책 업데이트
       if (!updatedBook) throw new Error("Book not found");

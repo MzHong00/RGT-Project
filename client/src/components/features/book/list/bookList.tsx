@@ -38,7 +38,7 @@ export const BookList = ({ page, title, author }: IBookQueryParams) => {
 };
 
 const Book = ({ book }: { book: IBook }) => {
-  const { title, author, stock } = book;
+  const { title, author, stock, soldCount } = book;
 
   return (
     <div className={styles.book}>
@@ -46,7 +46,7 @@ const Book = ({ book }: { book: IBook }) => {
         <RiBookLine /> {title}
       </h4>
       <p>저자: {author}</p>
-      <p>재고: {stock}</p>
+      <p>재고: {stock - soldCount}</p>
     </div>
   );
 };
