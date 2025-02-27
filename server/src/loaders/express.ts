@@ -5,10 +5,9 @@ import routes from "../api/route";
 import config from "../config";
 
 export default (app: Express) => {
-  console.log(config.allowClientUrl);
-  
   const corsOptions = {
-    origin: "https://rgt-three.vercel.app",
+    origin: config.allowClientUrl,
+    credentials: true,
   };
 
   app.use(cors(corsOptions));
