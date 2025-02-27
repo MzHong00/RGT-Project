@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
+import type { IBook } from "../interface/IBook";
+
+const bookSchema = new mongoose.Schema<IBook>({
   title: { type: String, required: true },
-  authors: { type: String, required: true },
+  author: { type: String, required: true },
   price: { type: Number, required: true },
   stock: { type: Number, required: true },
-  soldCount: { type: Number, required: true },
+  soldCount: { type: Number, default: 0 },
 });
 
-export const Book = mongoose.model("Book", bookSchema);
+export const Book = mongoose.model<IBook>("Book", bookSchema);
