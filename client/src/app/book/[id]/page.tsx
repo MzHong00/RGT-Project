@@ -1,18 +1,17 @@
-import { Suspense } from "react";
-
 import { BookDetail } from "@/containers/book/bookDetail";
+import { QueryWrapper } from "@/components/common/queryWrapper";
 import { LoadingSpinner } from "@/components/common/loadingSpinner";
 
 export default async function BookDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
   return (
-    <Suspense fallback={<LoadingSpinner msg="책 정보 가져오는 중..." />}>
+    <QueryWrapper supenseFallback={<LoadingSpinner msg="책 정보 가져오는 중..." />}>
       <BookDetail id={id} />
-    </Suspense>
+    </QueryWrapper>
   );
 }

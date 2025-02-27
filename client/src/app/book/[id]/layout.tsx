@@ -1,7 +1,11 @@
 import { BackButton } from "@/components/common/backButton";
 import { BookServices } from "@/services/book/bookServices";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   const book = await BookServices.readBook(id);

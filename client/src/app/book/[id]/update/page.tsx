@@ -4,7 +4,7 @@ import { UpdateBookForm } from "@/components/features/book/update/updateBookForm
 export default async function CreateBookPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
