@@ -13,7 +13,7 @@ import styles from "./page.module.scss";
 export default async function BookPage({
   searchParams,
 }: {
-  searchParams: IBookQueryParams;
+  searchParams: Promise<IBookQueryParams>;
 }) {
   const params = await searchParams;
 
