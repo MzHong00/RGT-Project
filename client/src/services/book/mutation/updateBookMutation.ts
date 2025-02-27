@@ -18,7 +18,7 @@ export const useUpdateBookMutation = () => {
         queryClient.refetchQueries({
           queryKey: list,
         }),
-        queryClient.invalidateQueries({ queryKey: [...root, data._id] }),
+        queryClient.refetchQueries({ queryKey: [...root, data._id] }),
       ]);
 
       router.back();
