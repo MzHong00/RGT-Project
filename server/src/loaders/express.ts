@@ -2,10 +2,11 @@ import express, { type Express } from "express";
 import cors from "cors";
 
 import routes from "../api/route";
+import config from "../config";
 
 export default (app: Express) => {
   const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: config.allowClientUrl,
     credentials: true,
   };
 
