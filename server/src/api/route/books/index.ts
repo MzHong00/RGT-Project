@@ -1,79 +1,137 @@
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 
+import { BookService } from "../../../services/book";
+import { IBookQueryParams } from "../../../interface/IBook";
+
 const route = Router();
 
 export const books = (app: Router) => {
   app.use("/books", route);
 
-  // 책 목록 조회 - 입력 검증 필요 없음
-  route.get("/", (req, res) => {
-    res.json({ message: "책 목록 조회" });
-  });
+  // 책 목록 조회
+  route.get(
+    "/",
+    celebrate({
+      [Segments.QUERY]: Joi.object({
+        page: Joi.string(),
+        title: Joi.string().allow(""),
+        author: Joi.string().allow(""),
+      }),
+    }),
+    async (req, res) => {
+      try {
+        const query = req.query as IBookQueryParams;
 
-  // 책 상세 정보 조회 - ID 검증
+        const { books, totalCount } = await BookService.readBooks(query);
+        res.json({ books, totalCount });
+      } catch (error) {
+        res.status(500).json({ message: "서버 오류 발생", error });
+      }
+    }
+  );
+
+  // 책 상세 정보 조회
   route.get(
     "/:id",
     celebrate({
-      [Segments.PARAMS]: Joi.object().keys({
+      [Segments.PARAMS]: Joi.object({
         id: Joi.string().required(),
       }),
     }),
-    (req, res) => {
-      const { id } = req.params;
-      res.json({ message: `책 상세 정보 조회 - ID: ${id}` });
+    async (req, res) => {
+      try {
+        const { id } = req.params;
+        const book = await BookService.readBook(id);
+
+        if (!book) {
+          return res.status(404).json({ message: "책을 찾을 수 없습니다." });
+        }
+
+        res.json(book);
+      } catch (error) {
+        res.status(500).json({ message: "서버 오류 발생", error });
+      }
     }
   );
 
-  // 책 추가 - 책 정보 검증
+  // 책 추가
   route.post(
     "/",
     celebrate({
-      [Segments.BODY]: Joi.object().keys({
+      [Segments.BODY]: Joi.object({
         title: Joi.string().required(),
-        authors: Joi.string().required(),
+        author: Joi.string().required(),
         price: Joi.number().required().min(0),
         stock: Joi.number().required().min(0),
-        soldCount: Joi.number().required().min(0),
       }),
     }),
-    (req, res) => {
-      res.json({ message: "책 추가", book: req.body });
+    async (req, res) => {
+      try {
+        const book = req.body;
+        const newBook = await BookService.createBook(book);
+
+        res.status(201).json(newBook);
+      } catch (error) {
+        res.status(500).json({ message: "책 추가 중 오류 발생", error });
+      }
     }
   );
 
-  // 책 수정 - ID 및 수정 정보 검증
+  // 책 수정
   route.put(
     "/:id",
     celebrate({
-      [Segments.PARAMS]: Joi.object().keys({
+      [Segments.PARAMS]: Joi.object({
         id: Joi.string().required(),
       }),
-      [Segments.BODY]: Joi.object().keys({
-        title: Joi.string().optional(),
-        authors: Joi.string().optional(),
-        price: Joi.number().optional().min(0),
-        stock: Joi.number().optional().min(0),
-        soldCount: Joi.number().optional().min(0),
+      [Segments.BODY]: Joi.object({
+        _id: Joi.string(),
+        title: Joi.string(),
+        author: Joi.string(),
+        price: Joi.number().min(0),
+        stock: Joi.number().min(0),
+        soldCount: Joi.number().min(0),
       }),
     }),
-    (req, res) => {
-      const { id } = req.params;
-      res.json({ message: `책 수정 - ID: ${id}`, updatedBook: req.body });
+    async (req, res) => {
+      try {
+        const { id } = req.params;
+        const book = req.body;
+
+        const updatedBook = await BookService.updateBook(id, book);
+        if (!updatedBook) {
+          return res.status(404).json({ message: "책을 찾을 수 없습니다." });
+        }
+
+        res.json(updatedBook);
+      } catch (error) {
+        res.status(500).json({ message: "책 수정 중 오류 발생", error });
+      }
     }
   );
 
-  // 책 삭제 - ID 검증
+  // 책 삭제
   route.delete(
     "/:id",
     celebrate({
-      [Segments.PARAMS]: Joi.object().keys({
+      [Segments.PARAMS]: Joi.object({
         id: Joi.string().required(),
       }),
     }),
-    (req, res) => {
-      const { id } = req.params;
-      res.json({ message: `책 삭제 - ID: ${id}` });
+    async (req, res) => {
+      try {
+        const { id } = req.params;
+
+        const deleted = await BookService.deleteBook(id);
+        if (!deleted) {
+          return res.status(404).json({ message: "책을 찾을 수 없습니다." });
+        }
+
+        res.json({ message: `책 삭제 - ID: ${id}` });
+      } catch (error) {
+        res.status(500).json({ message: "책 삭제 중 오류 발생", error });
+      }
     }
   );
 };
