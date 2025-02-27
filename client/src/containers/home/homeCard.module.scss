@@ -1,0 +1,20 @@
+@use '/src/styles/mixin.scss' as m;
+
+.container {
+    width: 400px;
+    padding: 1rem;
+    @include m.pos-center();
+    @include m.flex-layout(column, center, center);
+    border-radius: var(--border-radius);
+    box-shadow: 0px 0px 10px 8px rgba(var(--color-dark), 0.8);
+}
+
+.entryLink {
+    width: 100%;
+    height: 48px;
+    padding-inline: 0.5rem;
+    @include m.flex-layout(column, center, center);
+    @include m.main-button();
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+}
