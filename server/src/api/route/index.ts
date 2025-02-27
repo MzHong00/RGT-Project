@@ -1,7 +1,10 @@
-import { Router } from 'express';
+import { Router } from "express";
+import { books } from "./books";
 
 export default () => {
-	const app = Router();
+  const app = Router();
 
-	return app
-}
+  books(app);
+
+  return app;
+};

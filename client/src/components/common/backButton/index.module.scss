@@ -1,0 +1,6 @@
+@use '/src/styles/mixin.scss' as m;
+
+.button {
+    background-color: rgb(var(--color-main));
+    border-radius: var(--border-radius);
+}
