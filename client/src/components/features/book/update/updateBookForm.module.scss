@@ -1,0 +1,28 @@
+@use '/src/styles/mixin.scss' as m;
+
+.container {
+    width: 100%;
+    padding: 1rem;
+    @include m.flex-layout(column);
+
+    .inputGroup {
+    @include m.flex-layout(column, normal, normal, 0.5rem);
+    }
+
+    & input {
+        height: 48px;
+        padding-inline: 0.5rem;
+        font-size: 1.1rem;
+        background-color: rgb(var(--color-dark));
+        border-radius: var(--border-radius);
+    }
+
+    & input[type="submit"] {
+        @include m.main-button();
+    }
+}
+
+.errorMessage {
+    font-size: 0.8rem;
+    color: red;
+}
