@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <div>
-      
-    </div>
-  );
+import { HomeCard } from "@/containers/home/homeCard";
+
+export default function HomePage() {
+  return <HomeCard />
 }

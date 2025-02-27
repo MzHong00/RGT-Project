@@ -1,0 +1,28 @@
+@use '/src/styles/mixin.scss' as m;
+
+.bookContainer {
+    @include m.flex-layout(column);
+
+    &>li {
+        flex-basis: auto;
+    }
+}
+
+.book {
+    padding: 1rem;
+    @include m.flex-layout(row);
+    box-shadow: 0px 0px 2px 1px silver;
+    border-radius: var(--border-radius);
+}
+
+.bookPageNavigation {
+    margin: auto;
+    @include m.flex-layout(row, center, normal, 0);
+
+    & .numberPageButton {
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        transition-duration: 0.3s;
+    }
+}
