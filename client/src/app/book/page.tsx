@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Suspense } from "react";
 import { RiAddLine } from "@react-icons/all-files/ri/RiAddLine";
 
 import type { IBookQueryParams } from "@/types/IBook";
 import { IconBox } from "@/components/common/iconBox";
 import { SearchBox } from "@/components/features/book/search";
 import { BookList } from "@/components/features/book/list/bookList";
+import { QueryWrapper } from "@/components/common/queryWrapper";
 import { LoadingSpinner } from "@/components/common/loadingSpinner";
   
 import styles from "./page.module.scss";
@@ -25,9 +25,9 @@ export default async function BookPage({
         </Link>
       </section>
       <SearchBox />
-      <Suspense fallback={<LoadingSpinner msg="책 목록 로딩 중..." />}>
+      <QueryWrapper supenseFallback={<LoadingSpinner msg="책 목록 로딩 중..." />}>
         <BookList {...params} />
-      </Suspense>
+      </QueryWrapper>
     </div>
   );
 }
